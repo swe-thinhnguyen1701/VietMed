@@ -1,6 +1,14 @@
-const modifyData = require("../utils/modifyData");
-
 const resolvers = {
+    Medicine: {
+        __resolveType(obj) {
+            if (
+                obj.openfda?.product_type?.[0] === "HUMAN PRESCRIPTION DRUG" // optional fallback
+            ) {
+                return "PrescriptionMedicine";
+            }
+            return "OTCMedicine";
+        }
+    },
     Query: {
         getMedicineByNDC: async (_, { ndc }) => {
             // STEP 1: look up the ndc in our database
@@ -10,7 +18,9 @@ const resolvers = {
             console.log(`Searching for NDC: ${ndc}`);
             const rxNormResponse = await fetch(`https://rxnav.nlm.nih.gov/REST/ndcstatus.json?ndc=${ndc}`);
             const rxNormData = await rxNormResponse.json();
-            if (rxNormData.ndcStatus.status === "UNKNOWN" || !rxNormData.ndcStatus.rxcui) {
+            if (rxNormData.ndcStatus.status === "UNKNOWN" 
+                || !rxNormData.ndcStatus.rxcui
+                || ndc.length !== 13) {
                 // throw error message with error code 404
                 throw new Error(`NDC ${ndc} not found`);
             }
@@ -22,14 +32,10 @@ const resolvers = {
                 // throw error message with error code 404
                 throw new Error(`NDC ${ndc} not found`);
             }
-            // modify the data and store it to the database
-            const modifiedData = modifyData(fdaData.results[0]);
-            modifiedData.ndc = ndc; // add the ndc to the modified data
-            modifiedData.rxcui = rxNormData.ndcStatus.rxcui;
-            // console.log(modifiedData);
             // store the modified data to the database
             // return modified data
-            return modifiedData;
+            const medicine = fdaData.results[0];
+            return fdaData.results[0];
         },
     }
 };
