@@ -1,13 +1,20 @@
-import { Box } from '@chakra-ui/react'
-import SearchBar from './components/SearchBar'
+import { ApolloClient, createHttpLink, InMemoryCache, ApolloProvider } from "@apollo/client";
+import Medicine from "./component/MedicineResult"
+
+const httpLink = createHttpLink({
+  uri: "/graphql"
+});
+
+const client = new ApolloClient({
+  link: httpLink,
+  cache: new InMemoryCache()
+});
 
 function App() {
   return (
-    <>
-      <Box padding={2}>
-        <SearchBar />
-      </Box>
-    </>
+    <ApolloProvider client={client}>
+      <Medicine />
+    </ApolloProvider>
   )
 }
 
