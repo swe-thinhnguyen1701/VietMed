@@ -53,8 +53,13 @@ const typeDefs = `
 
     union Medicine = OTCMedicine | PrescriptionMedicine
 
+
+    type MedicineResponse {
+        brand_name: [String]
+    }
+
     type Query {
-        getMedicineByNDC(ndc: String!): Medicine
+        getMedicineByNDC(ndc: String!): MedicineResponse
     }
 `;
 
