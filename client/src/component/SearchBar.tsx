@@ -1,4 +1,4 @@
-import { useSearchStore } from "../state-management/search/store";
+import useSearchStore from "../state-management/search/store";
 import { Formik } from 'formik';
 import { Button, Input, InputGroup, InputRightElement, Tooltip } from "@chakra-ui/react";
 import { LuSearch } from "react-icons/lu";
@@ -33,7 +33,6 @@ const SearchBar = () => {
                                     variant="ghost"
                                     size="sm"
                                     border="none"
-                                    _hover={{ bgColor: "none" }}
                                 >
                                     <LuSearch />
                                 </Button>
