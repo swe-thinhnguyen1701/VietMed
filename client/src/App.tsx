@@ -1,5 +1,5 @@
 import { ApolloClient, createHttpLink, InMemoryCache, ApolloProvider } from "@apollo/client";
-import Medicine from "./component/MedicineResult"
+import SearchPage from "./pages/SearchPage";
 
 const httpLink = createHttpLink({
   uri: "/graphql"
@@ -13,7 +13,7 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <Medicine />
+      <SearchPage />
     </ApolloProvider>
   )
 }
