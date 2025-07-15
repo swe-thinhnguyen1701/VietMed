@@ -11,7 +11,7 @@ const SearchResult = () => {
     });
 
     if (loading) return <Spinner />;
-    if (error) return <Heading as="h1">{error.cause?.extensions ? error.cause.extensions.code : error.message}</Heading>;
+    if (error) return <Heading as="h1">{error.message}</Heading>;
     if (!data || !data.getMedicineByNDC) {
         return
     }
