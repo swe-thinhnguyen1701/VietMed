@@ -59,7 +59,7 @@ const typeDefs = `
     }
 
     type Query {
-        getMedicineByNDC(ndc: String!): MedicineResponse
+        getMedicineByNDC(ndc: String!): Medicine
     }
 `;
 
